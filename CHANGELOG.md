@@ -1,3 +1,7 @@
+## [0.3.0]
+- Fixed black internal eDP panel after initial modeset when `tryCloseGate()` fails in `XE::adlnSetDualClock()` while no display pipe is active (`!active`), preventing `clockFaulted` from latching and blocking AUX/link training.
+- Includes all `0.2.0` patches (6-bpc eDP scanout acceptance, `display13SSTPort` Combo DDI `0x550 == 0` admission, and optional `N97NativeBlockReason` diagnostic).
+
 # Changelog
 
 All releases are unofficial and experimental. Each release is built on a specific upstream
