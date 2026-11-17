@@ -122,6 +122,7 @@ All items are required unless marked optional. **This repository does not contai
 
 | Release | Upstream WhateverXe | WhateverXe Graphics package | Status |
 |---|---|---|---|
+| [v0.3.0](https://github.com/cpushalman/WhateverXe-Patched/releases/tag/v0.3.0) | **0.8.0** | **0.4.1** | Fixes dark eDP panel after boot (`adlnSetDualClock` cold `tryCloseGate` latch) |
 | [v0.2.0](https://github.com/belugaa-01/WhateverXe-Patched/releases/tag/v0.2.0) | **0.8.0** | **0.4.1** | Tested on one machine |
 | [v0.1.0-intial](https://github.com/belugaa-01/WhateverXe-Patched/releases/tag/v0.1.0-Initial) | 0.6.1 | 0.3.2 | Tested on one machine |
 
@@ -321,7 +322,7 @@ Requires macOS with Xcode Command Line Tools and Python 3.
 git clone https://github.com/b00t0x/WhateverXe.git && cd WhateverXe
 git checkout 0.8.0                       # or 0.6.1 for the older release
 # Place Lilu.kext and MacKernelSDK in the repository root (see upstream's README)
-curl -O https://github.com/belugaa-01/WhateverXe-Patched/blob/main/patches/0.2.0/apply_functional_patches.py
+curl -O https://raw.githubusercontent.com/cpushalman/WhateverXe-Patched/main/patches/0.3.0/apply_functional_patches.py
 python3 apply_functional_patches.py      # add --no-diagnostic to leave out the optional diagnostic
 python3 tools/test.py                    # CPU tests
 python3 tools/build.py --release         # output: build/WhateverXe.kext
@@ -329,7 +330,10 @@ python3 tools/build.py --release         # output: build/WhateverXe.kext
 
 The latest script supports upstream 0.6.1 and 0.8.0 besides different scripts for different versions are provided. If upstream changes the code again it prints
 `FAILED (no anchor variant matched exactly once)` and changes nothing in that file; please open an issue.
-Ready-made diffs and patches are in [`patches/`](https://github.com/belugaa-01/WhateverXe-Patched/tree/main/patches).
+Ready-made diffs and patches are in [`patches/`](https://github.com/cpushalman/WhateverXe-Patched/tree/main/patches).
+
+### What's new in `patches/0.3.0`
+- **Dark eDP panel after initial modeset (`adlnSetDualClock`):** In `XE::adlnSetDualClock()` (`WhateverXe/kern_xe.cpp`), the first panel modeset requests a CDCLK transition (652.8 MHz) before any pipe is active. If `IOWorkLoop::tryCloseGate()` fails, upstream latches `clockFaulted`, blocking AUX/link training and panel light-up controller-wide while Metal keeps running over VNC. `0.3.0` proceeds when `tryCloseGate()` fails with no active pipes (`!active`), keeping all `0.2.0` 6-bpc eDP scanout and `display13SSTPort` fixes intact.
 
 ---
 
