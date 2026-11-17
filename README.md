@@ -3,7 +3,7 @@
 > **Status: experimental pre-release, tested on one machine.**
 > Metal works on the tested laptop, but there are known issues (see [Known issues](#known-issues-and-untested-features)).
 > Keep a working backup of your EFI folder before trying anything here.
-> So far it has been **verified only on an Alder Lake-U Core i3-1215U (`0x46B3`)**; other chips in the 12th/13th-gen Xe-LP family are untested (see [Compatibility](#compatibility)).
+> So far it has been **verified on an Alder Lake-U Core i3-1215U (`0x46B3`) and a Raptor Lake-H Core i5-13420H (`0xA7A8`)**; other chips in the 12th/13th-gen Xe-LP family are untested (see [Compatibility](#compatibility)).
 
 > **Warning — do not update Safari together with macOS updates.**
 > In the tester's experience, updating Safari along with macOS updates introduces **more video-playback errors**.
@@ -13,9 +13,9 @@
 > This is a precaution based on one tester's observation, not a fully diagnosed cause.
 
 This is an unofficial community patch set on top of
-[b00t0x/WhateverXe](https://github.com/b00t0x/WhateverXe) (commit `68a2427`).
+[b00t0x/WhateverXe](https://github.com/b00t0x/WhateverXe) (`0.6.1` commit `68a2427` and `0.8.0`).
 It is **not affiliated with or endorsed by the upstream author**. All driver work is upstream's;
-this repository only adjusts two checks so a laptop with a 6-bit internal eDP panel can start the native
+this repository adjusts three checks so a laptop with a 6-bit internal eDP panel can start the native display path without latching a false `clockFaulted` state during cold CDCLK modeset (`adlnSetDualClock`)
 graphics driver on 12th/13th-gen Xe-LP (Display 13) laptop iGPUs. It has been verified on one Alder Lake-U machine only. Discussion: [Reddit thread](https://www.reddit.com/r/hackintosh/s/AMW8XHMaXC).
 
 ---
